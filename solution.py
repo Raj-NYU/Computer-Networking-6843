@@ -7,18 +7,18 @@ import sys
 
 def webServer(port=13331):
     serverSocket = socket(AF_INET, SOCK_STREAM)
-    print('Socket Created')
+    #print('Socket Created')
     # Prepare a server socket
     serverSocket.bind(('localhost', port))
     # Fill in start
     serverSocket.listen(1)
     # Fill in end
-    print('waiting for connections')
+    #print('waiting for connections')
 
     while True:
         # Establish the connection
         connectionSocket, addr = serverSocket.accept()
-        print("Connected with ", addr)
+        #print("Connected with ", addr)
         try:
 
             try:
