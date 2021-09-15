@@ -1,4 +1,3 @@
-
 # import socket module
 from socket import *
 # In order to terminate the program
@@ -7,29 +6,30 @@ import sys
 
 def webServer(port=13331):
     serverSocket = socket(AF_INET, SOCK_STREAM)
-    #print('Socket Created')
     # Prepare a server socket
-    serverSocket.bind(('localhost', port))
+    serverSocket.bind(("", port))
     # Fill in start
     serverSocket.listen(1)
-    # Fill in end
-    #print('waiting for connections')
+    #print('Listening...')
+    # fill in end
 
     while True:
         # Establish the connection
-        connectionSocket, addr = serverSocket.accept()
-        #print("Connected with ", addr)
+        #print('Ready to serve...')
+        connectionSocket, addr = serverSocket.accept()  # Fill in start    #Fill in end
         try:
 
             try:
-                message = connectionSocket.recv(1024)
+                message = connectionSocket.recv(2048).decode()  # Fill in start    #Fill in end
                 filename = message.split()[1]
                 f = open(filename[1:])
-                outputdata = f.read()
+                outputdata = f.read()  # Fill in start    #Fill in end
 
                 # Send one HTTP header line into socket.
                 # Fill in start
-                connectionSocket.send(bytes("\nHTTP/1.1 200 OK\n\n"))
+                connectionSocket.send("HTTP/1.0 200 OK\r\r".encode())
+                connectionSocket.send("Content-Type: text/html\r\n".encode())
+                connectionSocket.send(message.encode())
                 # Fill in end
 
                 # Send the content of the requested file to the client
@@ -41,13 +41,13 @@ def webServer(port=13331):
             except IOError:
                 # Send response message for file not found (404)
                 # Fill in start
-                connectionSocket.send(bytes("\nHTTP/ 1.1 404 Not Found\n\n"))
-                connectionSocket.close()
+                #print('404 Not Found')
                 # Fill in end
-
+                connectionSocket.send('HTTP/1.0 404 NOT FOUND\r\n'.encode())
+                connectionSocket.close()
                 # Close client socket
                 # Fill in start
-                connectionSocket.close()
+
                 # Fill in end
 
         except (ConnectionResetError, BrokenPipeError):
