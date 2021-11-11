@@ -161,7 +161,7 @@ def get_route(hostname):
                     # If there is an exception/error to your if statements, you should append that to your list here
                     #print('Error')
                     #Fill in end
-                break
+                    break
             finally:
                 mySocket.close()
 
